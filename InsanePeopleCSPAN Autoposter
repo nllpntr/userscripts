@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         InsanePeopleCSPAN Autoposter
 // @namespace    http://reddit.com/r/insanepeoplecspan
-// @version      0.1
+// @version      0.2
 // @description  Adds links to the c-span transcript window to allow quick text posts to r/insanepeoplecspan
 // @author       nllpntr
 // @match        https://www.c-span.org/video/*
 // @grant        none
+// @updateURL    https://github.com/nllpntr/userscripts/raw/master/InsanePeopleCSPAN%20Autoposter
 // ==/UserScript==
 
 (function() {
