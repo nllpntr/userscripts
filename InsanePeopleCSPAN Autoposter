@@ -24,14 +24,15 @@
                     var timecode_readable = jQuery(this).parent().text().trim();
                     var postBtn = jQuery("<a time='" + timecode_readable + "' href='javascript:void(0);'>Post to r/IPCS</a>").click(function() {
                         var timecode = jQuery(this).prev().attr('id').replace("transcript-time-", "");
-                        var link = pageURL + "&start=" + timecode;
+                        var linkURL = pageURL + "&start=" + timecode;
+                        var link = "[" + pageTitle + " \[" + timecode_readable + "\]](" + linkURL + ")";
                         var paragraphs = [];
                         jQuery(this).parent().next().next().find("p.short_transcript").each(function() {
-                            var txt = jQuery(this).text().toLowerCase().trim().replace(/\n/g,">\n\n");
+                            var txt = ">" + jQuery(this).text().toLowerCase().trim().replace(/\n/g,">\n\n");
                             paragraphs.push(txt);
                         });
-                        var quote = paragraphs.join("\n\n>");
-                        var content = "[" + pageTitle + " \[" + timecode_readable + "\]](" + link + ")\n\n\>" + quote;
+                        var quote = paragraphs.join("\n\n");
+                        var content = quote + "\n\n" + link;
                         var URL = "https://www.reddit.com/r/insanepeoplecspan/submit?selftext=true&title=&text=" + encodeURIComponent(content);
                         window.open(URL, '_blank');
                     });
