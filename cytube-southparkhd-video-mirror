@@ -6,6 +6,8 @@
 // @author       nllpntr
 // @match        https://cytu.be/r/southparkhd
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/nllpntr/userscripts/master/cytube-southparkhd-video-mirror
+
 // ==/UserScript==
 
 (function() {
