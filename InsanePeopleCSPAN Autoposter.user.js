@@ -6,7 +6,7 @@
 // @author       nllpntr
 // @match        https://www.c-span.org/video/*
 // @grant        none
-// @updateURL    https://github.com/nllpntr/userscripts/raw/master/InsanePeopleCSPAN%20Autoposter
+// @updateURL    https://github.com/nllpntr/userscripts/raw/master/InsanePeopleCSPAN%20Autoposter.user.js
 // ==/UserScript==
 
 (function() {
