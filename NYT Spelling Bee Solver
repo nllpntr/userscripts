@@ -12,6 +12,7 @@
 (function() {
     'use strict';
 
+	/*** UI Fuckery ***/
 	// create html elements for display:
 	var header = jQuery("<div class='sb-progress-box' style='padding: 12px 12px 12px 0;'><h4 class='sb-progress-rank' style='width: auto;'>Solved Words</h4></div>");
 	var items = jQuery("<ul class='sb-wordlist-items' />");
@@ -27,6 +28,8 @@
 	wordlist.css("width","auto");
 	wordlist.css("position","relative");
 	items.css("height", "auto");
+
+	/*** End UI Fuckery ***/
 
 	var center = jQuery(".hive-cell.center text").text();     // get center letter
 	var outer = jQuery(".hive-cell.outer text").text();       // get outer letters as a string
