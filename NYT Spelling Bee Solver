@@ -1,0 +1,62 @@
+// ==UserScript==
+// @name         NYT Spelling Bee Solver
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Word solver for the NYT Spelling Bee Game
+// @author       nllpntr
+// @match        https://www.nytimes.com/puzzles/spelling-bee
+// @require      https://code.jquery.com/jquery-3.5.1.min.js
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+	var header = jQuery("<div class='sb-progress-box' style='padding: 12px 12px 12px 0;'><h4 class='sb-progress-rank' style='width: auto;'>Solved Words</h4></div>");
+	var items = jQuery("<ul class='sb-wordlist-items' />");
+	var wordlist = jQuery("<div class='sb-wordlist' style='padding-top: 25px;' />").append(items);
+	var wordlist_box = jQuery("<div class='sb-wordlist-box' />").append(wordlist);
+	var container = jQuery("<div class='sb-status-box' />").append(header).append(wordlist_box);
+
+	jQuery(".sb-content-box").append(container);
+
+	container.css("width", "25%");
+	wordlist.css("width","auto");
+	wordlist.css("position","relative");
+	items.css("height", "auto");
+
+	var center = jQuery(".hive-cell.center text").text();
+	var outer = jQuery(".hive-cell.outer text").text();
+	var all_chars = center + outer;
+
+	var dict_path = "https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
+	var dict = "";
+	var words = [];
+
+	jQuery.get(dict_path, function(response) {
+
+		dict = response.toLowerCase().split("\n");
+
+		words = dict.filter(word => word.length > 3);
+		words = words.filter(word => word.includes(center));
+		words = words.filter(invalidChars);
+		words = words.sort(function(a, b){
+			return a.length - b.length;
+		});
+
+		for ( var i = 0; i < words.length; i++ ) {
+			items.append("<li><span class='sb-anagram'>" + words[i] + "</span></li>");
+		};
+
+	});
+
+	function invalidChars(word) {
+		for ( var i = 0; i < word.length; i++ ) {
+			if ( all_chars.indexOf(word[i]) < 0 ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+})();
