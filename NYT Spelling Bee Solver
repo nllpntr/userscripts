@@ -68,12 +68,12 @@
 		// find pangrams
 		for ( var i = 0; i < words.length; i++ ) {
 			var word = words[i];
-			var score = 0;
+			var isPangram = true;
 			for ( var j = 0; j < all_chars.length; j++ ) {
-				if ( word.includes(all_chars[i]) )
-					score++;
+				if ( !word.includes(all_chars[j]) )
+					isPangram = false;
 			}
-			if (score == all_chars.length)
+			if (isPangram)
 				pangrams.push(word);
 		}
 
