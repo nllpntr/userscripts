@@ -48,7 +48,7 @@
 
 		words = dict.filter(word => word.length > 3);        // filter out words with length < 4
 		words = words.filter(word => word.includes(center)); // filter out words that don't contain the center letter
-		words = words.filter(invalidChars);                  // filter out all words that DON'T contain at least one of the center or outer letters
+		words = words.filter(invalidChars);                  // filter out all words with letters not present in all_chars
 		words = words.sort(function(a, b) {                  // sort by length, descending
 			return b.length - a.length;
 		});
