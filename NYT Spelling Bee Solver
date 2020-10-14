@@ -15,7 +15,7 @@
 	/*** UI Fuckery ***/
 	// create html elements for display:
 	var header = jQuery("<div class='sb-progress-box' style='padding: 12px 12px 12px 0;'><h4 class='sb-progress-rank' style='width: auto;'>Solved Words</h4></div>");
-	var items = jQuery("<ul class='sb-wordlist-items' />");
+	var items = jQuery("<ul class='sb-wordlist-items' style='column-count: 5;' />");
 	var wordlist = jQuery("<div class='sb-wordlist' style='padding-top: 25px;' />").append(items);
 	var wordlist_box = jQuery("<div class='sb-wordlist-box' />").append(wordlist);
 	var container = jQuery("<div class='sb-status-box' />").append(header).append(wordlist_box);
@@ -24,7 +24,7 @@
 	jQuery(".sb-content-box").append(container);
 
 	// make some ui adjustments
-	container.css("width", "25%");
+	jQuery(".sb-status-box").css("width", "auto");
 	wordlist.css("width","auto");
 	wordlist.css("position","relative");
 	items.css("height", "auto");
