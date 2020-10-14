@@ -60,7 +60,7 @@
 
 	});
 
-	// custom array filter, keeps words that have at least one center or outer letter
+	// custom array filter, keeps words that only contain letters in all_chars
 	function invalidChars(word) {
 		for ( var i = 0; i < word.length; i++ ) {
 			if ( all_chars.indexOf(word[i]) < 0 ) {
