@@ -25,6 +25,7 @@
 	jQuery(".sb-content-box").append(container);
 
 	// make some ui adjustments
+	jQuery(".sb-controls").css("position", "relative").css("top", "320px");
 	jQuery(".sb-status-box").css("width", "auto");
 	jQuery(".sb-status-box:first").css("width", "25%");
 	wordlist.css("width","auto");
@@ -33,31 +34,55 @@
 
 	/*** End UI Fuckery ***/
 
+
+
 	var center = jQuery(".hive-cell.center text").text();     // get center letter
 	var outer = jQuery(".hive-cell.outer text").text();       // get outer letters as a string
 	var all_chars = center + outer;                           // all valid letters in one string
 
 	// path to online word dictionary
-	var dict_url = "https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
+	var dict_url = "https://raw.githubusercontent.com/zeisler/scrabble/master/db/dictionary.csv";//https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
 	var dict = "";
 	var words = [];
+	var pangrams = [];
+	var found_words = []; // array of words already found and entered
+
+	jQuery(".sb-wordlist-items li").each(function() {
+		found_words.push(jQuery(this).text()); // collect found words
+	});
 
 	// load the dictionary content
 	jQuery.get(dict_url, function(response) {
 
 		// split words in the dictionary by newlines
-		dict = response.toLowerCase().split("\n");
+		dict = response.toLowerCase().replaceAll("\r", "").split("\n");
 
-		words = dict.filter(word => word.length > 3);        // filter out words with length < 4
-		words = words.filter(word => word.includes(center)); // filter out words that don't contain the center letter
-		words = words.filter(invalidChars);                  // filter out all words with letters not present in all_chars
-		words = words.sort(function(a, b) {                  // sort by length, descending
+		words = dict.filter(word => word.length > 3);               // filter out words with length < 4
+		words = words.filter(word => word.includes(center));        // filter out words that don't contain the center letter
+		words = words.filter(invalidChars);                         // filter out all words with letters not present in all_chars
+		words = words.filter(word => !found_words.includes(word));  // filter out words that have already been entered
+		words = words.sort(function(a, b) {                         // sort by length, descending
 			return b.length - a.length;
 		});
 
-		// iterate on remaining solved words, append list items to UI
+		// find pangrams
 		for ( var i = 0; i < words.length; i++ ) {
-			items.append("<li><span class='sb-anagram'>" + words[i] + "</span></li>");
+			var word = words[i];
+			var score = 0;
+			for ( var j = 0; j < all_chars.length; j++ ) {
+				if ( word.includes(all_chars[i]) )
+					score++;
+			}
+			if (score == all_chars.length)
+				pangrams.push(word);
+		}
+
+		// iterate on remaining solved words, append list items to UI
+		for ( i = 0; i < words.length; i++ ) {
+			var item = jQuery("<li><span class='sb-anagram'>" + words[i] + "</span></li>");
+			items.append(item);
+			if ( pangrams.includes(words[i]) )
+				item.css("color", "#f00");     // highlight word if it's a pangram
 		};
 
 	});
