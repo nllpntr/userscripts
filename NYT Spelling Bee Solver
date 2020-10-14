@@ -13,6 +13,7 @@
     'use strict';
 
 	/*** UI Fuckery ***/
+
 	// create html elements for display:
 	var header = jQuery("<div class='sb-progress-box' style='padding: 12px 12px 12px 0;'><h4 class='sb-progress-rank' style='width: auto;'>Cheat Sheet</h4></div>");
 	var items = jQuery("<ul class='sb-wordlist-items' style='column-count: 5;' />");
@@ -25,6 +26,7 @@
 
 	// make some ui adjustments
 	jQuery(".sb-status-box").css("width", "auto");
+	jQuery(".sb-status-box:first").css("width", "25%");
 	wordlist.css("width","auto");
 	wordlist.css("position","relative");
 	items.css("height", "auto");
