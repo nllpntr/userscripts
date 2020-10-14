@@ -12,44 +12,52 @@
 (function() {
     'use strict';
 
+	// create html elements for display:
 	var header = jQuery("<div class='sb-progress-box' style='padding: 12px 12px 12px 0;'><h4 class='sb-progress-rank' style='width: auto;'>Solved Words</h4></div>");
 	var items = jQuery("<ul class='sb-wordlist-items' />");
 	var wordlist = jQuery("<div class='sb-wordlist' style='padding-top: 25px;' />").append(items);
 	var wordlist_box = jQuery("<div class='sb-wordlist-box' />").append(wordlist);
 	var container = jQuery("<div class='sb-status-box' />").append(header).append(wordlist_box);
 
+	// append ui-elements: right-aligned sidebar with list of found words
 	jQuery(".sb-content-box").append(container);
 
+	// make some ui adjustments
 	container.css("width", "25%");
 	wordlist.css("width","auto");
 	wordlist.css("position","relative");
 	items.css("height", "auto");
 
-	var center = jQuery(".hive-cell.center text").text();
-	var outer = jQuery(".hive-cell.outer text").text();
-	var all_chars = center + outer;
+	var center = jQuery(".hive-cell.center text").text();     // get center letter
+	var outer = jQuery(".hive-cell.outer text").text();       // get outer letters as a string
+	var all_chars = center + outer;                           // all valid letters in one string
 
+	// path to online word dictionary
 	var dict_path = "https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
 	var dict = "";
 	var words = [];
 
+	// load the dictionary content
 	jQuery.get(dict_path, function(response) {
 
+		// split words in the dictionary by newlines
 		dict = response.toLowerCase().split("\n");
 
-		words = dict.filter(word => word.length > 3);
-		words = words.filter(word => word.includes(center));
-		words = words.filter(invalidChars);
-		words = words.sort(function(a, b){
-			return a.length - b.length;
+		words = dict.filter(word => word.length > 3);        // filter out words with length < 4
+		words = words.filter(word => word.includes(center)); // filter out words that don't contain the center letter
+		words = words.filter(invalidChars);                  // filter out all words that DON'T contain at least one of the center or outer letters
+		words = words.sort(function(a, b) {                  // sort by length, descending
+			return b.length - a.length;
 		});
 
+		// iterate on remaining solved words, append list items to UI
 		for ( var i = 0; i < words.length; i++ ) {
 			items.append("<li><span class='sb-anagram'>" + words[i] + "</span></li>");
 		};
 
 	});
 
+	// custom array filter, keeps words that have at least one center or outer letter
 	function invalidChars(word) {
 		for ( var i = 0; i < word.length; i++ ) {
 			if ( all_chars.indexOf(word[i]) < 0 ) {
