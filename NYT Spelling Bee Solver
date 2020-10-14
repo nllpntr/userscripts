@@ -34,14 +34,12 @@
 
 	/*** End UI Fuckery ***/
 
-
-
 	var center = jQuery(".hive-cell.center text").text();     // get center letter
 	var outer = jQuery(".hive-cell.outer text").text();       // get outer letters as a string
 	var all_chars = center + outer;                           // all valid letters in one string
 
 	// path to online word dictionary
-	var dict_url = "https://raw.githubusercontent.com/zeisler/scrabble/master/db/dictionary.csv";//https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
+	var dict_url = "https://raw.githubusercontent.com/zeisler/scrabble/master/db/dictionary.csv";
 	var dict = "";
 	var words = [];
 	var pangrams = [];
