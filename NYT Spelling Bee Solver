@@ -36,12 +36,12 @@
 	var all_chars = center + outer;                           // all valid letters in one string
 
 	// path to online word dictionary
-	var dict_path = "https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
+	var dict_url = "https://raw.githubusercontent.com/dolph/dictionary/master/popular.txt";
 	var dict = "";
 	var words = [];
 
 	// load the dictionary content
-	jQuery.get(dict_path, function(response) {
+	jQuery.get(dict_url, function(response) {
 
 		// split words in the dictionary by newlines
 		dict = response.toLowerCase().split("\n");
